@@ -58,7 +58,6 @@ PrimetradeAI_Project/
 │   └── 13_feature_importance.png
 └── output/
     ├── summary_stats.csv
-    ├── account_segments.csv
     └── insights_and_strategy.txt
 ```
 ## Methodology
