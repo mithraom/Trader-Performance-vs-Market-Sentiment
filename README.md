@@ -110,10 +110,10 @@ streamlit run app_streamlit.py
 
 | Tab | Contents |
 |-----|----------|
-| 🏠 Overview | KPI metrics, summary stats table, rolling PnL timeline, cumulative PnL by regime |
-| 🔍 Behavioral Explorer | Filter by sentiment, compare any metric, coin heatmap with adjustable top-N |
-| 🧬 Trader Clustering | KMeans archetypes (adjustable 2–6 clusters), scatter plots, auto-labeled profiles |
-| 🤖 Predictive Model | AUC per fold, feature importance chart, live next-day profitability simulator |
+|  Overview | KPI metrics, summary stats table, rolling PnL timeline, cumulative PnL by regime |
+|  Behavioral Explorer | Filter by sentiment, compare any metric, coin heatmap with adjustable top-N |
+|  Trader Clustering | KMeans archetypes (adjustable 2–6 clusters), scatter plots, auto-labeled profiles |
+|  Predictive Model | AUC per fold, feature importance chart, live next-day profitability simulator |
 
 ---
 
