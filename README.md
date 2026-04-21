@@ -1,5 +1,3 @@
-Here you go — same format, updated with your real data:
-
 # Hyperliquid × Fear/Greed Sentiment Analysis
 
 > Uncovering how Bitcoin market sentiment shapes trader behavior and performance on Hyperliquid.
