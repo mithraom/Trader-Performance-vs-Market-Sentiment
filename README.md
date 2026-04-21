@@ -161,8 +161,11 @@ Every account in this dataset exceeds a 55% win rate — an extraordinary result
 ---
 
 ## Requirements
+```
 pandas>=1.5
 numpy>=1.23
 matplotlib>=3.6
 seaborn>=0.12
 scikit-learn>=1.2
+
+```
