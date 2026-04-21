@@ -33,6 +33,7 @@ python analysis.py
 ---
 
 ## Project Structure
+```
 PrimetradeAI_Project/
 ├── analysis.py               ← Main analysis script (all-in-one)
 ├── analysis.ipynb            ← Jupyter notebook with inline outputs
@@ -56,12 +57,10 @@ PrimetradeAI_Project/
 │   ├── 12_cumulative_pnl_by_sentiment.png
 │   └── 13_feature_importance.png
 └── output/
-├── summary_stats.csv
-├── account_segments.csv
-└── insights_and_strategy.txt
-
----
-
+    ├── summary_stats.csv
+    ├── account_segments.csv
+    └── insights_and_strategy.txt
+```
 ## Methodology
 
 ### Part A — Data Preparation
