@@ -8,6 +8,8 @@
 
 ```bash
 # 1. Clone / download this repo
+git clone https://github.com/mithraom/Trader-Performance-vs-Market-Sentiment
+
 # 2. Install dependencies
 pip install -r requirements.txt
 
@@ -16,13 +18,12 @@ pip install -r requirements.txt
 #    data/trades.csv     — columns: Account, Coin, Execution Price, Size Tokens,
 #                          Size USD, Side, Timestamp IST, Direction, Closed PnL, Fee, ...
 
-# 4. Run the full analysis
+# 4. Run the full analysis (generates all charts + output files)
 python analysis.py
 # OR open analysis.ipynb in Jupyter and run all cells
 
-# Charts  → charts/*.png
-# Stats   → output/summary_stats.csv, output/account_segments.csv
-# Write-up → output/insights_and_strategy.txt
+# 5. Launch the interactive dashboard (bonus)
+streamlit run app_streamlit.py
 ```
 
 > **Note:** Data files are excluded from this repo (proprietary to Primetrade.ai).
@@ -33,8 +34,9 @@ python analysis.py
 ## Project Structure
 ```
 PrimetradeAI_Project/
-├── analysis.py               ← Main analysis script (all-in-one)
+├── analysis.py               ← Full analysis script (run this first)
 ├── analysis.ipynb            ← Jupyter notebook with inline outputs
+├── app_streamlit.py          ← Interactive dashboard (bonus)
 ├── requirements.txt
 ├── README.md
 ├── data/
@@ -56,8 +58,12 @@ PrimetradeAI_Project/
 │   └── 13_feature_importance.png
 └── output/
     ├── summary_stats.csv
+    ├── account_segments.csv
     └── insights_and_strategy.txt
+
 ```
+---
+
 ## Methodology
 
 ### Part A — Data Preparation
@@ -94,6 +100,21 @@ PrimetradeAI_Project/
 - **Result**: AUC = 0.933 ± 0.053 — sentiment + behavioral features are strong predictors of daily PnL direction
 - **Top features**: win_rate, n_trades, avg_size
 
+### Bonus — Interactive Dashboard (Streamlit)
+
+Four-tab interactive app for exploring all results without running the analysis script.
+
+```bash
+streamlit run app_streamlit.py
+```
+
+| Tab | Contents |
+|-----|----------|
+| 🏠 Overview | KPI metrics, summary stats table, rolling PnL timeline, cumulative PnL by regime |
+| 🔍 Behavioral Explorer | Filter by sentiment, compare any metric, coin heatmap with adjustable top-N |
+| 🧬 Trader Clustering | KMeans archetypes (adjustable 2–6 clusters), scatter plots, auto-labeled profiles |
+| 🤖 Predictive Model | AUC per fold, feature importance chart, live next-day profitability simulator |
+
 ---
 
 ## Key Insights
@@ -111,7 +132,7 @@ Traders are far more active on Fear days. Crucially, avg daily PnL on Fear days 
 ### Insight 3 — Traders Go Long Into Fear (Contrarian Positioning)
 Fear avg long ratio: **60.9%** | Greed avg long ratio: **51.8%**
 
-Contrary to expectations, traders hold a *higher* long bias during Fear. These accounts appear contrarian or mean-reversion oriented — buying into weakness. When sentiment turns, this positioning benefits from the subsequent rally.
+Contrary to expectations, traders hold a higher long bias during Fear. These accounts appear contrarian or mean-reversion oriented — buying into weakness. When sentiment turns, this positioning benefits from the subsequent rally.
 
 ### Insight 4 — Position Sizes Are Larger on Fear Days (Deliberate, Not Panic)
 Fear avg trade size: **$6,200** | Greed avg trade size: **$5,872**
@@ -128,18 +149,18 @@ Every account in this dataset exceeds a 55% win rate — an extraordinary result
 ## Strategy Recommendations
 
 ### Strategy 1 — "Sentiment-Gated Position Sizing"
-**Who**: All traders, especially the Large-size segment
-**Rule**: Reduce individual trade size to **60% of normal on Fear days**. Resume full sizing only after ≥ 2 consecutive Greed days.
+**Who**: All traders, especially the Large-size segment  
+**Rule**: Reduce individual trade size to **60% of normal on Fear days**. Resume full sizing only after ≥ 2 consecutive Greed days.  
 **Why**: Fear-day trades are already larger ($6,200 vs $5,872) and occur at 2.7× frequency. Uncapped sizing during high-frequency Fear trading compounds drawdown risk. Capping size preserves capital while still participating in the volatility opportunity.
 
 ### Strategy 2 — "Fear Aggression, Greed Patience"
-**Who**: Frequent traders (top 33% by trade count)
-**Rule**: On Fear days, scale frequency to **1.25× baseline** but only for highest-conviction setups with defined stops. On Greed days, scale back to **0.75× baseline** — opportunity density is lower.
+**Who**: Frequent traders (top 33% by trade count)  
+**Rule**: On Fear days, scale frequency to **1.25× baseline** but only for highest-conviction setups with defined stops. On Greed days, scale back to **0.75× baseline** — opportunity density is lower.  
 **Why**: This dataset shows Fear days generate higher absolute PnL ($39,012 vs $15,848). Skilled frequent traders should lean into volatile conditions rather than retreat from them.
 
 ### Bonus Rule — "Contrarian Long on Fear Extremes"
-**Trigger**: Platform long_ratio > 60% AND sentiment reads Fear AND sentiment transitions Fear → Neutral/Greed
-**Action**: Hold or add to long positions in top-liquidity coins (BTC, ETH, SOL), 1–2× normal size, stop below recent swing low
+**Trigger**: Platform long_ratio > 60% AND sentiment reads Fear AND sentiment transitions Fear → Neutral/Greed  
+**Action**: Hold or add to long positions in top-liquidity coins (BTC, ETH, SOL), 1–2× normal size, stop below recent swing low  
 **Why**: Insight 3 shows these accounts go long during Fear and profit from it. The sentiment flip acts as a confirmation signal — existing long positioning then accelerates as the market recovers.
 
 ---
@@ -164,5 +185,10 @@ numpy>=1.23
 matplotlib>=3.6
 seaborn>=0.12
 scikit-learn>=1.2
+streamlit>=1.28
 
 ```
+
+Python 3.9+ recommended.
+
+---
